@@ -1,0 +1,84 @@
+version: '3.7'
+services:
+  mongo:
+    env_file: .env
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - ${MONGODB_PORT}:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+    networks:
+      - app-network
+
+  mongo-express:
+    env_file: .env
+    image: mongo-express
+    container_name: mongodb_ui
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - 8082:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_PASSWORD}
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@mongo:27017/
+    networks:
+      - app-network
+
+  redis:
+    env_file: .env
+    image: redis:latest
+    container_name: redis
+    restart: always
+    command: redis-server --requirepass ${REDIS_PASS}
+    ports:
+      - 6379:6379
+    networks:
+      - app-network
+
+  redis-commander:
+    env_file: .env
+    container_name: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    depends_on:
+      - redis
+    ports:
+      - 8081:8081
+    environment:
+      REDIS_HOSTS: local:redis:6379:0:${REDIS_PASS}
+    networks:
+      - app-network
+
+  api:
+    image: node:latest
+    container_name: api
+    env_file: .env
+    restart: always
+    depends_on:
+      - mongo
+      - redis
+    environment:
+      - MONGODB_HOST=mongodb
+      - REDIS_HOST=redis
+    ports:
+      - 3000:8080
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    command: npm start
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '5'
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
