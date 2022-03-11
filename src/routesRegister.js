@@ -1,11 +1,16 @@
-const glob = require('glob');
+import glob from 'glob';
 
-module.exports = (app) => {
-	glob('src/**/routes.js', (err, files) => {
-		files.forEach((file)=> {
-			if (file.substr(-3, 3) === '.js') {
-				require(`./${file.substr(4).replace('.js', '')}`)(app);
-			}
-		});
-	});
-};
+export default (app) =>
+  class ApplicationRoutes {
+    constructor() {}
+
+    static async init() {
+      glob('src/**/routes.js', (err, files) => {
+        files.forEach(async (file) => {
+          if (file.substring(file.length - 3) === '.js') {
+            (await import(`./${file.substring(4)}`)).default(app);
+          }
+        });
+      });
+    }
+  };

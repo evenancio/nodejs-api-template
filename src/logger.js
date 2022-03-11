@@ -1,4 +1,4 @@
-const winston = require('winston');
+import winston from 'winston';
 
 const level = () => {
   const env = process.env.NODE_ENV || 'development';
@@ -56,7 +56,4 @@ const debug = (message) => {
   logger.log('debug', message);
 };
 
-module.exports = {
-  logger,
-  debug,
-};
+export { logger, debug };

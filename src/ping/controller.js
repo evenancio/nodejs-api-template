@@ -1,7 +1,7 @@
-const PingService = require('./service');
-const { logger } = require('../logger');
+import PingService from './service.js';
+import { logger } from '../logger.js';
 
-module.exports = {
+export default {
   async hello(req, res) {
     try {
       const msg = await PingService.hello();

@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
-const redis = require('./redisConnection');
-const chai = require('chai');
-const chaiHttp = require('chai-http');
+import mongoose from 'mongoose';
+import redis from './redisConnection';
+import chai from 'chai';
+import chaiHttp from 'chai-http';
 
-const server = require('../index');
+import server from '../index';
 const should = chai.should();
 
 chai.use(chaiHttp);

@@ -1,6 +1,6 @@
-require('dotenv').config();
+import 'dotenv/config';
 
-module.exports = {
+export default {
   mongoDbConnectionString: process.env.MONGODB_URL,
   jwtSecretKey: process.env.JWT_SECRET_KEY || 'secretOrPrivateKey',
   redisUrl: process.env.REDISCLOUD_URL,

@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import logger from '../logger';
+
 const Schema = mongoose.Schema;
-const logger = require('../logger');
 
 /********************** Req Log ***********************/
 

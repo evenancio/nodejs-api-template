@@ -1,6 +1,6 @@
-const PingController = require('./controller');
+import PingController from './controller.js';
 
-module.exports = (app) => {
+export default (app) => {
   app.get('/ping', PingController.hello);
   app.get('/ping/mongo', PingController.mongo);
   app.get('/ping/redis', PingController.redis);

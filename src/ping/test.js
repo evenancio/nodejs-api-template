@@ -1,9 +1,9 @@
-const redis = require('../redisConnection');
-const chai = require('chai');
-const chaiHttp = require('chai-http');
+import redis from '../redisConnection.js';
+import chai from 'chai';
+import chaiHttp from 'chai-http';
 
-const server = require('../../index');
-const HelloModel = require('./model');
+import server from '../../index';
+import HelloModel from './model';
 const should = chai.should();
 
 chai.use(chaiHttp);

@@ -1,8 +1,7 @@
-const HelloModel = require('./model');
-const redis = require('../redisConnection');
-const { cli } = require('winston/lib/winston/config');
+import HelloModel from './model.js';
+import redis from '../redisConnection.js';
 
-module.exports = {
+export default {
   async hello() {
     return 'Hello';
   },

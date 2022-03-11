@@ -1,10 +1,10 @@
-const redis = require('async-redis');
-const url = require('url');
-const config = require('../config');
+import redis from 'async-redis';
+import url from 'url';
+import config from '../config.js';
 
 let redisConnection = null;
 
-const self = (module.exports = {
+const self = {
   async getRedisConnection() {
     if (redisConnection) {
       return redisConnection;
@@ -67,4 +67,6 @@ const self = (module.exports = {
     const path = req.path;
     return await redis.del(path);
   },
-});
+};
+
+export default self;

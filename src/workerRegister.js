@@ -1,5 +1,5 @@
-const glob = require('glob');
-const redis = require('./redisConnection');
+import glob from 'glob';
+import redis from './redisConnection';
 const connection = redis.getSyncRedisConnection();
 
 module.exports = () => {

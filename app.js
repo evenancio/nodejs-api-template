@@ -1,16 +1,16 @@
-const dotenv = require('dotenv');
-const express = require('express');
-const mongoose = require('mongoose');
-const jwt = require('express-jwt');
-const expressSanitizer = require('express-sanitizer');
-const compression = require('compression');
-const cors = require('cors');
-const morgan = require('morgan');
+import dotenv from 'dotenv';
+import express from 'express';
+import mongoose from 'mongoose';
+import jwt from 'express-jwt';
+import expressSanitizer from 'express-sanitizer';
+import compression from 'compression';
+import cors from 'cors';
+import morgan from 'morgan';
+import { json } from 'body-parser';
 
-const config = require('./config');
-const { logger } = require('./src/logger');
-const redis = require('./src/redisConnection');
-const { json } = require('body-parser');
+import config from './config.js';
+import { logger } from './src/logger.js';
+import redis from './src/redisConnection.js';
 
 dotenv.config();
 const app = express();
@@ -75,6 +75,7 @@ app.use(function (err, req, res, next) {
 });
 
 // Register all routes
-require('./src/routesRegister')(app);
+import routes from './src/routesRegister.js';
+routes(app).init();
 
-module.exports = app;
+export default app;
